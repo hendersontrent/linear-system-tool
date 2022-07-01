@@ -8,6 +8,7 @@
 #--------------------------------------
 
 library(shiny)
+library(matlib)
 library(dplyr)
 library(ggplot2)
 library(scales)

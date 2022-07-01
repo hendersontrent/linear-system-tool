@@ -49,7 +49,7 @@ generate_system_eqs <- function(n = c(2, 3)){
   # Generate coefficient matrix A
   
   n_terms <- (n * n) + n # Number of total values
-  row1 <- floor(sample(x = -15:15, size = n, replace = TRUE))
+  row1 <- floor(sample(x = -10:10, size = n, replace = TRUE))
   
   if(n == 2){
     row2 <- generate_later_rows(row1)
@@ -74,7 +74,7 @@ generate_system_eqs <- function(n = c(2, 3)){
   
   # Generate RHS vector b and append to A to form augmented matrix
   
-  b <- floor(sample(x = -15:15, size = n, replace = TRUE))
+  b <- floor(sample(x = -10:10, size = n, replace = TRUE))
   aug <- unname(cbind(A, b))
   return(aug)
 }
@@ -91,23 +91,27 @@ solve_system <- function(aug){
   
   #--------- Solve the system ---------
   
-  lhs <- aug[, 1:(ncol(aug) - 1)]
-  rhs <- aug[, ncol(aug)]
-  solution <- solve(lhs, rhs)
+  A <- aug[, 1:(ncol(aug) - 1)]
+  b <- aug[, ncol(aug)]
+  vars <- matlib::Solve(A, b, fractions = TRUE)
   return(solution)
 }
 
-#--------------- Data visualisation --------------
-
-#' Function to plot 2x2 equations
-#' @param A the matrix of equations
-#' @param solution the matrix solutions
-#' @param animate Boolean whether to animate the plot or not. Defaults to \code{FALSE}
-#' @return an object of class ggplot
+#' Generate plot with equations
+#' @param aug the augmented matrix
+#' @return an object of class plot
 #' @author Trent Henderson
 #' 
 
-plot_system <- function(A, solution, animate = FALSE){
+plot_system <- function(aug){
   
-  xx
+  n <- nrow(aug)
+  A <- aug[, 1:n]
+  b <- aug[, n + 1]
+  
+  if(n == 2){
+    matlib::plotEqn(A, b)
+  } else{
+    matlib::plotEqn3d(A, b, xlim = c(-10, 10), ylim = c(-10, 10))
+  }
 }
