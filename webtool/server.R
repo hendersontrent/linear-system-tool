@@ -11,7 +11,7 @@ shinyServer <- function(input, output, session) {
   
   
   
-  #------------------ Generate plot -----------------
+  #------------------ Generate plots ----------------
   
   
 
